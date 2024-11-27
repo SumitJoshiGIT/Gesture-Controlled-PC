@@ -101,6 +101,7 @@ dmypy.json
 *.tmp
 *.bak
 *.old
+*.zip
 *.orig
 *.log
 .DS_Store
