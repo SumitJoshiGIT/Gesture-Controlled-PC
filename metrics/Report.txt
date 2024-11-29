@@ -1,0 +1,21 @@
+
+for keypoint classi...
+
+
+
+
+
+
+
+for point history classi...
+
+              precision    recall  f1-score   support
+
+           0       0.98      1.00      0.99       395
+           1       0.98      0.97      0.97       295
+           2       0.99      0.97      0.98       307
+           3       0.95      0.95      0.95       327
+
+    accuracy                           0.97      1324
+   macro avg       0.97      0.97      0.97      1324
+weighted avg       0.97      0.97      0.97      1324

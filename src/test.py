@@ -18,7 +18,6 @@ os.makedirs(points_dir, exist_ok=True)
 last_time = time.time()
 csv_filename = "hand_coordinates_with_gesture.csv"
 frame_counter = 1 
-
 header = ["Gesture", "Image Name", "T0", "T1", "T2", "T3", "Thumb", "I3", "I2", "I1", "Index", 
           "M3", "M2", "M1", "Middle", "R3", "R2", "R1", "Ring", "L3", "L2", "L1", "Little"]
 
@@ -52,19 +51,12 @@ while cap.isOpened():
                     y = int(landmark.y * frame.shape[0])
                     all_points_coordinates.append((x, y))
 
-                   
-                    if 0 <= idx <= 4:  
-                        color = (0, 255, 255)  
-                    elif 5 <= idx <= 8: 
-                        color = (0, 255, 0) 
-                    elif 9 <= idx <= 12: 
-                        color = (255, 255, 0)  
-                    elif 13 <= idx <= 16: 
-                        color = (255, 0, 255)  
-                    elif 17 <= idx <= 20:  
-                        color = (255, 0, 0) 
-                    else:  
-                        color = (255, 255, 255)  
+                    if 0 <= idx <= 4:    color = (0, 255, 255)  
+                    elif 5 <= idx <= 8:  color = (0, 255, 0) 
+                    elif 9 <= idx <= 12: color = (255, 255, 0)  
+                    elif 13 <= idx <= 16:color = (255, 0, 255)  
+                    elif 17 <= idx <= 20:color = (255, 0, 0) 
+                    else:color = (255, 255, 255)  
 
                     
                     cv2.circle(black_canvas, (x, y), 2, color, -1) 
