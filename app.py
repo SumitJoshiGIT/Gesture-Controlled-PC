@@ -81,8 +81,8 @@ def main():
                 most_common_fg_id = Counter(finger_gesture_history).most_common(1)[0][0]
                 cursor.select(gid=hand_sign_id,mid=most_common_fg_id,landmarks=landmark_list) 
       
-                #cv.rectangle(debug_image, (brect[0], brect[1]), (brect[2], brect[3]), (0, 0, 0), 1)
-                #debug_image = draw_landmarks(debug_image, landmark_list)
+                cv.rectangle(debug_image, (brect[0], brect[1]), (brect[2], brect[3]), (0, 0, 0), 1)
+                debug_image = draw_landmarks(debug_image, landmark_list)
                 debug_image = draw_info_text(debug_image, brect, handedness, keypoint_classifier_labels[hand_sign_id], point_history_classifier_labels[most_common_fg_id])
         else:
             point_history.append([0, 0])
