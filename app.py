@@ -12,9 +12,9 @@ from src.Cursor import Cursor
 
 class GestureControlledPC:
     def __init__(self):
-        self.cap = cv.VideoCapture(0)
-        self.cap.set(cv.CAP_PROP_FRAME_WIDTH, 960)
-        self.cap.set(cv.CAP_PROP_FRAME_HEIGHT, 540)
+        self.cam = cv.VideoCapture(0)
+        self.cam.set(cv.CAP_PROP_FRAME_WIDTH, 960)
+        self.cam.set(cv.CAP_PROP_FRAME_HEIGHT, 540)
 
         self.hands = mp.solutions.hands.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.7, min_tracking_confidence=0.5)
         self.keypoint_classifier = KeyPointClassifier(model_path='./models/keypoint_classifier.tflite')
@@ -36,7 +36,8 @@ class GestureControlledPC:
         results = self.hands.process(cv.cvtColor(image, cv.COLOR_BGR2RGB))
         if results.multi_hand_landmarks:
             for hand_landmarks, handedness in zip(results.multi_hand_landmarks, results.multi_handedness):
-                brect = self.calc_bounding_rect(image, hand_landmarks)
+
+                #brect = self.calc_bounding_rect(image, hand_landmarks)
                 landmark_list = self.calc_landmark_list(image, hand_landmarks)
                 pre_processed_landmark_list = self.pre_process_landmark(landmark_list)
                 pre_processed_point_history_list = self.pre_process_point_history(image, self.point_history)
@@ -51,9 +52,9 @@ class GestureControlledPC:
                 most_common_fg_id = Counter(self.finger_gesture_history).most_common(1)[0][0]
                 self.cursor.select(gid=hand_sign_id, mid=most_common_fg_id, landmarks=landmark_list)
 
-                cv.rectangle(image, (brect[0], brect[1]), (brect[2], brect[3]), (0, 0, 0), 1)
-                image = self.draw_landmarks(image, landmark_list)
-                image = self.draw_info_text(image, brect, handedness, self.keypoint_classifier_labels[hand_sign_id], self.point_history_classifier_labels[most_common_fg_id])
+               # cv.rectangle(image, (brect[0], brect[1]), (brect[2], brect[3]), (0, 0, 0), 1)
+               # image = self.draw_landmarks(image, landmark_list)
+               # image = self.draw_info_text(image, brect, handedness, self.keypoint_classifier_labels[hand_sign_id], self.point_history_classifier_labels[most_common_fg_id])
         else:
             self.point_history.append([0, 0])
         return image
@@ -104,18 +105,19 @@ class GestureControlledPC:
         return image
 
     def run(self):
+        print("FPS :")
         while True:
             if cv.waitKey(10) == 27: break  # ESC
-
-            ret, image = self.cap.read()
+            print(self.cam.get(cv.CAP_PROP_FPS),end='\r')
+            ret, image = self.cam.read()
             if not ret: break
             image = cv.flip(image, 1)
             debug_image = image.copy()
 
             debug_image = self.process_hand_landmarks(debug_image)
-            cv.imshow('Hand Gesture Recognition', debug_image)
+            #cv.imshow('Hand Gesture Recognition', debug_image)
 
-        self.cap.release()
+        self.cam.release()
         cv.destroyAllWindows()
 
 if __name__ == '__main__':

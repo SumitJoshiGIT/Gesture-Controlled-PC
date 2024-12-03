@@ -12,11 +12,12 @@ class Cursor():
         #['Stop', 'Clockwise', 'Counter Clockwise', 'Move']
        
         if(mid==3):self.move(landmarks)
-        #elif(mid==1):pyautogui.scroll(50)  # Scroll up by 10 units
+        #elif(mid==1):pyautogui.scroll(50)  
         #elif(mid==2):pyautogui.scroll(-50)
         elif(gid==1):self.click()
         elif(gid==3):self.scroll(landmarks)
-            
+         #Scroll Up By 10 Units # Scroll Down By 10 Units 
+         #Move Cursor To The Right # Move Cursor To The Left #
         #elif(gid==0):pyautogui.press(button='left')
     def click(self):   
         if(time.time()-self.time>1.5):  # To avoid multiple clicks
